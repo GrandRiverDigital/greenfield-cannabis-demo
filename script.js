@@ -249,3 +249,29 @@ if (contactForm && contactSubmitBtn) {
     contactSubmitBtn.style.pointerEvents = 'none';
   });
 }
+
+/* ─── IMMEDIATE REVEAL: fire on anchor nav + viewport check ─── */
+(function() {
+  function revealInView() {
+    document.querySelectorAll('.sr, .reveal').forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 100) {
+        el.classList.add('up');
+        el.classList.add('is-visible');
+      }
+    });
+  }
+  // Run on load
+  setTimeout(revealInView, 50);
+  setTimeout(revealInView, 300);
+  // Run on any scroll
+  window.addEventListener('scroll', revealInView, { passive: true });
+  // Run when anchor links are clicked
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    setTimeout(revealInView, 100);
+    setTimeout(revealInView, 400);
+    setTimeout(revealInView, 800);
+  });
+})();
